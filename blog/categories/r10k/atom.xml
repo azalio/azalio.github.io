@@ -4,7 +4,7 @@
   <title><![CDATA[Category: R10k | azalio blog]]></title>
   <link href="http://azalio.github.io/blog/categories/r10k/atom.xml" rel="self"/>
   <link href="http://azalio.github.io/"/>
-  <updated>2017-07-24T01:28:52+03:00</updated>
+  <updated>2017-07-24T01:30:26+03:00</updated>
   <id>http://azalio.github.io/</id>
   <author>
     <name><![CDATA[Mikhail Petrov]]></name>
@@ -85,7 +85,7 @@
 Далее я сделал запуск r10k из крона, автоматическое подписывание сертификатов на основе доменного имени и запустил <em>puppet agent</em> как демон.</p>
 
 <p>P.S.:<br />
-Предположим вам надо протестировать какую-то фичу и вы не хотите сразу пушить в мастер.</p>
+Предположим вам надо протестировать какую-то фичу и вы не хотите сразу пушить в мастер:</p>
 
 <ul>
   <li>Создаете ветку в вашем репозитории;</li>
