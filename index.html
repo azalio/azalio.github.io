@@ -5,11 +5,12 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>My Octopress Blog</title>
-  <meta name="author" content="Your Name">
+  <title>azalio blog</title>
+  <meta name="author" content="Mikhail Petrov">
 
   
-  <meta name="description" content=" Blog Archives Recent Posts ">
+  <meta name="description" content="В моей работе мне часто приходится делать пулл(мердж) реквесты в основную ветку (например, в master).
+Чтобы людям, которые мержат в мастер было &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -21,7 +22,7 @@
   <link rel="canonical" href="http://azalio.github.io/">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
-  <link href="/atom.xml" rel="alternate" title="My Octopress Blog" type="application/atom+xml">
+  <link href="/atom.xml" rel="alternate" title="azalio blog" type="application/atom+xml">
   <script src="/javascripts/modernizr-2.0.js"></script>
   <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
   <script>!window.jQuery && document.write(unescape('%3Cscript src="/javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
@@ -31,14 +32,26 @@
 <link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
 
   
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-287998-5']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
 
 </head>
 
 <body   >
   <header role="banner"><hgroup>
-  <h1><a href="/">My Octopress Blog</a></h1>
+  <h1><a href="/">azalio blog</a></h1>
   
-    <h2>A blogging framework for hackers.</h2>
+    <h2>Рабочие заметки SE</h2>
   
 </hgroup>
 
@@ -66,6 +79,54 @@
       <div class="blog-index">
   
   
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2017/07/24/git-rebase-squash/">Git-rebase-squash</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2017-07-24T00:28:35+03:00'><span class='date'><span class='date-month'>Jul</span> <span class='date-day'>24</span><span class='date-suffix'>th</span>, <span class='date-year'>2017</span></span> <span class='time'>12:28 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>В моей работе мне часто приходится делать пулл(мердж) реквесты в основную ветку (например, в master).<br/>
+Чтобы людям, которые мержат в мастер было удобно, я следую следующему воркфлоу:</p>
+
+<ul>
+<li>Отвожу ветку;</li>
+<li>Работаю некоторое время над ней;</li>
+<li>Пушу в удаленный репозиторий свою ветку;</li>
+<li>Проверяю на серверах, что происходит то, что я задумывал;</li>
+<li>Подливаю из мастера коммиты, которые успели смержить наши мастера, чтобы мой коммит можно было вмержить автоматически;</li>
+<li>Соединяю все свои коммиты в один для удобста чтения и последующего разбора;</li>
+<li>Делаю пулл (мердж) реквест.</li>
+</ul>
+
+
+<p>Сейчас я покажу как это сделать с помощью git.</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2017/07/24/git-rebase-squash/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
   <div class="pagination">
     
     <a href="/blog/archives">Blog Archives</a>
@@ -77,6 +138,10 @@
     <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2017/07/24/git-rebase-squash/">Git-rebase-squash</a>
+      </li>
     
   </ul>
 </section>
@@ -91,28 +156,40 @@
     </div>
   </div>
   <footer role="contentinfo"><p>
-  Copyright &copy; 2017 - Your Name -
+  Copyright &copy; 2017 - Mikhail Petrov -
   <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
 </p>
 
 </footer>
   
 
+<script type="text/javascript">
+      var disqus_shortname = 'azalio-github-io';
+      
+        
+        var disqus_script = 'count.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id; js.async = true;
+  js.src = "//connect.facebook.net/en_US/all.js#appId=212934732101925&xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
 
 
 
 
-
-
-  <script type="text/javascript">
-    (function(){
-      var twitterWidgets = document.createElement('script');
-      twitterWidgets.type = 'text/javascript';
-      twitterWidgets.async = true;
-      twitterWidgets.src = '//platform.twitter.com/widgets.js';
-      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
-    })();
-  </script>
 
 
 
