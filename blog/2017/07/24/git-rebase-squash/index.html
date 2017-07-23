@@ -97,226 +97,180 @@
   </header>
 
 
-<div class="entry-content"><p>В моей работе мне часто приходится делать пулл(мердж) реквесты в основную ветку (например, в master).<br/>
+<div class="entry-content"><p>В моей работе мне часто приходится делать пулл(мердж) реквесты в основную ветку (например, в master).<br />
 Чтобы людям, которые мержат в мастер было удобно, я следую следующему воркфлоу:</p>
 
 <ul>
-<li>Отвожу ветку;</li>
-<li>Работаю некоторое время над ней;</li>
-<li>Пушу в удаленный репозиторий свою ветку;</li>
-<li>Проверяю на серверах, что происходит то, что я задумывал;</li>
-<li>Подливаю из мастера коммиты, которые успели смержить наши мастера, чтобы мой коммит можно было вмержить автоматически;</li>
-<li>Соединяю все свои коммиты в один для удобста чтения и последующего разбора;</li>
-<li>Делаю пулл (мердж) реквест.</li>
+  <li>Отвожу ветку;</li>
+  <li>Работаю некоторое время над ней;</li>
+  <li>Пушу в удаленный репозиторий свою ветку;</li>
+  <li>Проверяю на серверах, что происходит то, что я задумывал;</li>
+  <li>Подливаю из мастера коммиты, которые успели смержить наши мастера, чтобы мой коммит можно было вмержить автоматически;</li>
+  <li>Соединяю все свои коммиты в один для удобста чтения и последующего разбора;</li>
+  <li>Делаю пулл (мердж) реквест.</li>
 </ul>
 
-
-<p>Сейчас я покажу как это сделать с помощью git.</p>
-
+<p>Сейчас я покажу как это сделать с помощью git.<br />
 <!--more-->
-
-
-<p>Отводим ветку:</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>$ git checkout -b new_branch
-</span><span class='line'>Switched to a new branch 'new_branch'</span></code></pre></td></tr></table></div></figure>
-
-
+Отводим ветку:</p>
+<figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+</pre></td><td class="code"><pre><code class=""><span class="line">$ git checkout -b new_branch
+</span><span class="line">Switched to a new branch 'new_branch'</span></code></pre></td></tr></table></div></figure>
 <p>Что-то делаем:</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>$ git add . && git commit -m "first commit"
-</span><span class='line'>[new_branch 23a60a2] first commit
-</span><span class='line'> 4 files changed, 0 insertions(+), 0 deletions(-)
-</span><span class='line'> create mode 100644 file1
-</span><span class='line'> create mode 100644 file2
-</span><span class='line'> create mode 100644 file3
-</span><span class='line'> create mode 100644 file4</span></code></pre></td></tr></table></div></figure>
-
-
+<figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+</pre></td><td class="code"><pre><code class=""><span class="line">$ git add . &amp;&amp; git commit -m "first commit"
+</span><span class="line">[new_branch 23a60a2] first commit
+</span><span class="line"> 4 files changed, 0 insertions(+), 0 deletions(-)
+</span><span class="line"> create mode 100644 file1
+</span><span class="line"> create mode 100644 file2
+</span><span class="line"> create mode 100644 file3
+</span><span class="line"> create mode 100644 file4</span></code></pre></td></tr></table></div></figure>
 <p>Пушим в свою ветку:</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>$ git push -u origin new_branch
-</span><span class='line'>Counting objects: 3, done.
-</span><span class='line'>Delta compression using up to 4 threads.
-</span><span class='line'>Compressing objects: 100% (2/2), done.
-</span><span class='line'>Writing objects: 100% (3/3), 291 bytes | 0 bytes/s, done.
-</span><span class='line'>Total 3 (delta 0), reused 0 (delta 0)
-</span><span class='line'>To https://github.com/azalio/test.git
-</span><span class='line'> * [new branch]      new_branch -&gt; new_branch
-</span><span class='line'>Branch new_branch set up to track remote branch new_branch from origin.</span></code></pre></td></tr></table></div></figure>
-
-
+<figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+</pre></td><td class="code"><pre><code class=""><span class="line">$ git push -u origin new_branch
+</span><span class="line">Counting objects: 3, done.
+</span><span class="line">Delta compression using up to 4 threads.
+</span><span class="line">Compressing objects: 100% (2/2), done.
+</span><span class="line">Writing objects: 100% (3/3), 291 bytes | 0 bytes/s, done.
+</span><span class="line">Total 3 (delta 0), reused 0 (delta 0)
+</span><span class="line">To https://github.com/azalio/test.git
+</span><span class="line"> * [new branch]      new_branch -&gt; new_branch
+</span><span class="line">Branch new_branch set up to track remote branch new_branch from origin.</span></code></pre></td></tr></table></div></figure>
 <p>Предположим, что я процессе проверки выяснилось, что надо изменить некоторые файлы:</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>$ echo "some changes" &gt;&gt; file1</span></code></pre></td></tr></table></div></figure>
-
-
+<figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class=""><span class="line">$ echo "some changes" &gt;&gt; file1</span></code></pre></td></tr></table></div></figure>
 <p>И опять коммитим и пушим:</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>$ git add . && git commit -m "second commit"
-</span><span class='line'>[new_branch 969d102] second commit
-</span><span class='line'> 1 file changed, 1 insertion(+)
-</span><span class='line'> 
-</span><span class='line'>$ git push -u origin new_branch
-</span><span class='line'>Counting objects: 3, done.
-</span><span class='line'>Delta compression using up to 4 threads.
-</span><span class='line'>Compressing objects: 100% (2/2), done.
-</span><span class='line'>Writing objects: 100% (3/3), 273 bytes | 0 bytes/s, done.
-</span><span class='line'>Total 3 (delta 1), reused 0 (delta 0)
-</span><span class='line'>remote: Resolving deltas: 100% (1/1), completed with 1 local object.
-</span><span class='line'>To https://github.com/azalio/test.git
-</span><span class='line'>   23a60a2..969d102  new_branch -&gt; new_branch
-</span><span class='line'>Branch new_branch set up to track remote branch new_branch from origin.</span></code></pre></td></tr></table></div></figure>
-
-
+<figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+<span class="line-number">13</span>
+<span class="line-number">14</span>
+</pre></td><td class="code"><pre><code class=""><span class="line">$ git add . &amp;&amp; git commit -m "second commit"
+</span><span class="line">[new_branch 969d102] second commit
+</span><span class="line"> 1 file changed, 1 insertion(+)
+</span><span class="line"> 
+</span><span class="line">$ git push -u origin new_branch
+</span><span class="line">Counting objects: 3, done.
+</span><span class="line">Delta compression using up to 4 threads.
+</span><span class="line">Compressing objects: 100% (2/2), done.
+</span><span class="line">Writing objects: 100% (3/3), 273 bytes | 0 bytes/s, done.
+</span><span class="line">Total 3 (delta 1), reused 0 (delta 0)
+</span><span class="line">remote: Resolving deltas: 100% (1/1), completed with 1 local object.
+</span><span class="line">To https://github.com/azalio/test.git
+</span><span class="line">   23a60a2..969d102  new_branch -&gt; new_branch
+</span><span class="line">Branch new_branch set up to track remote branch new_branch from origin.</span></code></pre></td></tr></table></div></figure>
 <p>Во время работы в своей ветке, ваши коллеги тоже работали и в мастере оказались их коммиты. Их надо добавить к вашим, чтобы гарантировать, что ваша ветка вольется в мастер автоматически.
 Переключаемся на мастер ветку:</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>$ git checkout master
-</span><span class='line'>Switched to branch 'master'</span></code></pre></td></tr></table></div></figure>
-
-
+<figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+</pre></td><td class="code"><pre><code class=""><span class="line">$ git checkout master
+</span><span class="line">Switched to branch 'master'</span></code></pre></td></tr></table></div></figure>
 <p>Подтягиваем изменения:</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>$ git pull</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Теперь нам надо добавить коммиты из мастера в свою ветку.<br/>
+<figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class=""><span class="line">$ git pull</span></code></pre></td></tr></table></div></figure>
+<p>Теперь нам надо добавить коммиты из мастера в свою ветку.<br />
 Переключаемся на нее:</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>$ git checkout new_branch</span></code></pre></td></tr></table></div></figure>
-
-
+<figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class=""><span class="line">$ git checkout new_branch</span></code></pre></td></tr></table></div></figure>
 <p>Подливаем коммиты:</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>$ git rebase master
-</span><span class='line'>First, rewinding head to replay your work on top of it...
-</span><span class='line'>Applying: first commit
-</span><span class='line'>Applying: second commit</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Итого у нас есть бранч, который автоматически сможет влиться в мастер.<br/>
+<figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+</pre></td><td class="code"><pre><code class=""><span class="line">$ git rebase master
+</span><span class="line">First, rewinding head to replay your work on top of it...
+</span><span class="line">Applying: first commit
+</span><span class="line">Applying: second commit</span></code></pre></td></tr></table></div></figure>
+<p>Итого у нас есть бранч, который автоматически сможет влиться в мастер.<br />
 Но для красоты, можно соединить ваши коммиты в один:</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>git rebase HEAD~2</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Где 2 - число коммитов, которые вы хотите соединить.<br/>
+<figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class=""><span class="line">git rebase HEAD~2</span></code></pre></td></tr></table></div></figure>
+<p>Где 2 - число коммитов, которые вы хотите соединить.<br />
 Появится экран где будет написано что-то подобное:</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>pick 82de0b1 first commit
-</span><span class='line'>pick dcd4606 second commit
-</span><span class='line'>
-</span><span class='line'># Rebase 7dc4c24..dcd4606 onto 7dc4c24 (2 commands)
-</span><span class='line'>#
-</span><span class='line'># Commands:
-</span><span class='line'># p, pick = use commit
-</span><span class='line'># r, reword = use commit, but edit the commit message
-</span><span class='line'># e, edit = use commit, but stop for amending
-</span><span class='line'># s, squash = use commit, but meld into previous commit
-</span><span class='line'># f, fixup = like "squash", but discard this commit's log message
-</span><span class='line'># x, exec = run command (the rest of the line) using shell
-</span><span class='line'># d, drop = remove commit</span></code></pre></td></tr></table></div></figure>
-
-
+<figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+<span class="line-number">13</span>
+</pre></td><td class="code"><pre><code class=""><span class="line">pick 82de0b1 first commit
+</span><span class="line">pick dcd4606 second commit
+</span><span class="line">
+</span><span class="line"># Rebase 7dc4c24..dcd4606 onto 7dc4c24 (2 commands)
+</span><span class="line">#
+</span><span class="line"># Commands:
+</span><span class="line"># p, pick = use commit
+</span><span class="line"># r, reword = use commit, but edit the commit message
+</span><span class="line"># e, edit = use commit, but stop for amending
+</span><span class="line"># s, squash = use commit, but meld into previous commit
+</span><span class="line"># f, fixup = like "squash", but discard this commit's log message
+</span><span class="line"># x, exec = run command (the rest of the line) using shell
+</span><span class="line"># d, drop = remove commit</span></code></pre></td></tr></table></div></figure>
 <p>Мне надо объединить второй коммит с первым, для этого я применяю <code>squash</code>.</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>pick 82de0b1 first commit
-</span><span class='line'>squash dcd4606 second commit</span></code></pre></td></tr></table></div></figure>
-
-
-<p>И закрываю редактор сохраняя изменения.<br/>
+<figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+</pre></td><td class="code"><pre><code class=""><span class="line">pick 82de0b1 first commit
+</span><span class="line">squash dcd4606 second commit</span></code></pre></td></tr></table></div></figure>
+<p>И закрываю редактор сохраняя изменения.<br />
 Появляется еще одно окно редактора, в котором надо написать сообщение, посвященное объединенному коммиту. Пишем, сохраняем, выходим.</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>$ git rebase -i HEAD~2
-</span><span class='line'>[detached HEAD 999b456] first commit
-</span><span class='line'> Date: Sat Jul 22 14:11:40 2017 +0300
-</span><span class='line'> 4 files changed, 1 insertion(+)
-</span><span class='line'> create mode 100644 file1
-</span><span class='line'> create mode 100644 file2
-</span><span class='line'> create mode 100644 file3
-</span><span class='line'> create mode 100644 file4
-</span><span class='line'>Successfully rebased and updated refs/heads/new_branch.</span></code></pre></td></tr></table></div></figure>
-
-
+<figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+</pre></td><td class="code"><pre><code class=""><span class="line">$ git rebase -i HEAD~2
+</span><span class="line">[detached HEAD 999b456] first commit
+</span><span class="line"> Date: Sat Jul 22 14:11:40 2017 +0300
+</span><span class="line"> 4 files changed, 1 insertion(+)
+</span><span class="line"> create mode 100644 file1
+</span><span class="line"> create mode 100644 file2
+</span><span class="line"> create mode 100644 file3
+</span><span class="line"> create mode 100644 file4
+</span><span class="line">Successfully rebased and updated refs/heads/new_branch.</span></code></pre></td></tr></table></div></figure>
 <p>Теперь нам надо запушить с <em>force</em>, поскольку мы по сути дела переписываем историю коммитов:</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>$ git push --force -u origin new_branch
-</span><span class='line'>Branch master set up to track remote branch master from origin.
-</span><span class='line'>Everything up-to-date</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Итого, у наша ветка можеть быть смержена автоматически и имеет красивую историю коммитов:<br/>
-<img src="/images/git-rebase-squash.png"></p>
+<figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+</pre></td><td class="code"><pre><code class=""><span class="line">$ git push --force -u origin new_branch
+</span><span class="line">Branch master set up to track remote branch master from origin.
+</span><span class="line">Everything up-to-date</span></code></pre></td></tr></table></div></figure>
+<p>Итого, у наша ветка можеть быть смержена автоматически и имеет красивую историю коммитов:<br />
+<img src="/images/git-rebase-squash.png" /></p>
 
 <p>Подробно про <strong>rebase</strong> вы можете прочитать в <a href="https://habrahabr.ru/post/161009/">этом</a> посте.</p>
 </div>
@@ -358,6 +312,8 @@
     <p class="meta">
       
       
+        <a class="basic-alignment right" href="/blog/2017/07/24/puppet-server-install/" title="Next Post: puppet-server-install">puppet-server-install &raquo;</a>
+      
     </p>
   </footer>
 </article>
@@ -375,6 +331,10 @@
     <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2017/07/24/puppet-server-install/">Puppet-server-install</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2017/07/24/git-rebase-squash/">Git-rebase-squash</a>

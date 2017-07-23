@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Puppet | azalio blog]]></title>
+  <link href="http://azalio.github.io/blog/categories/puppet/atom.xml" rel="self"/>
+  <link href="http://azalio.github.io/"/>
+  <updated>2017-07-24T01:25:28+03:00</updated>
+  <id>http://azalio.github.io/</id>
+  <author>
+    <name><![CDATA[Mikhail Petrov]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Puppet-server-install]]></title>
+    <link href="http://azalio.github.io/blog/2017/07/24/puppet-server-install/"/>
+    <updated>2017-07-24T01:15:00+03:00</updated>
+    <id>http://azalio.github.io/blog/2017/07/24/puppet-server-install</id>
+    <content type="html"><![CDATA[<p>Установка puppet server 5.x.</p>
+
+<p>Все действия я буду производить на CentOs 7.x</p>
+
+<p>Очень важно, чтобы время на серверах совпадало, поэтому установим <strong>ntp</strong>:<br />
+<code>sudo yum -y install ntp</code><br />
+<code>sudo systemctl start ntpd</code><br />
+<code>sudo systemctl enable ntpd</code><br />
+(хотя позже я просто взвел его через puppet).</p>
+
+<p>Для начала надо добавить puppet репозиторий (нужный вам вы можете найти <a href="https://docs.puppet.com/puppet/5.0/puppet_platform.html" target="_blank">тут</a>):<br />
+<code>sudo rpm -Uvh https://yum.puppetlabs.com/puppet5/puppet5-release-el-7.noarch.rpm</code></p>
+
+<p>И установить puppet server:<br />
+<code>yum install puppetserver</code>
+<!--more-->
+Для возможности ревью изменений, я настрою работу <em>environments</em> через git.<br />
+Вы можете поднять свой сервер, я же воспользуюсь сервером gitlab.com, так как у них можно бесплатно завести приватный репозиторий.</p>
+
+<p>Заходим на <a href="https://gitlab.com/" target="_blank">gitlab</a>, заводим приватный репозиторий, делаем основную ветку <strong>production</strong>.</p>
+
+<p>Так как у меня r10k (инструмент, который позволяет работать с динамическими окружениями) запускается из-под рута, то я добавил публичный ключ рута в gitlab.</p>
+
+<p>Паппетлабовцы создали репозиторий, который можно склонировать, для работы с динамическим окружением и написали <a href="https://github.com/puppetlabs/control-repo" target="_blank">инструкцию</a>. Выполните шаги, которые там указаны и возвращайтесь сюда.</p>
+
+<p>Устанавливаем <a href="https://github.com/adrienthebo/r10k" target="_blank">r10k</a> через puppet на мастер сервере:<br />
+<code>/opt/puppetlabs/puppet/bin/gem install r10k</code></p>
+
+<p>Создаем для него конфиг:<br />
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>cat /etc/puppetlabs/r10k/r10k.yaml
+</span><span class='line'># The location to use for storing cached Git repos
+</span><span class='line'>:cachedir: ‘/var/cache/r10k’&lt;/p&gt;
+</span><span class='line'>
+</span><span class='line'>&lt;h1 id="a-list-of-git-repositories-to-create"&gt;A list of git repositories to create&lt;/h1&gt;
+</span><span class='line'>&lt;p&gt;:sources:
+</span><span class='line'>  # This will clone the git repository and instantiate an environment per
+</span><span class='line'>  # branch in /etc/puppetlabs/code/environments
+</span><span class='line'>  :my-org:
+</span><span class='line'>    remote: ‘git@gitlab.com:azalio-puppet/control-repo.git’
+</span><span class='line'>    basedir: ‘/etc/puppetlabs/code/environments’</span></code></pre></td></tr></table></div></figure>
+Как вы видете в <strong>remote</strong> надо указать свой репозиторий.</p>
+
+<p>Все готово для запуска puppet и r10k.<br />
+<code>systemctl start puppetserver</code><br />
+<code>systemctl enable puppetserver</code><br />
+(если у вас ругнулось на память, то можете уменьшить настройки в файле <code>/etc/sysconfig/puppetserver</code> <em>JAVA_ARGS</em>)</p>
+
+<p>Запускаем r10k:<br />
+<code>/opt/puppetlabs/puppet/bin/r10k deploy environment -pv</code></p>
+
+<p>Он подтянет все бранчи из вашего git репозитория.</p>
+
+<p>Вот в принципе и все.<br />
+Далее я сделал запуск r10k из крона, автоматическое подписывание сертификатов на основе доменного имени и запустил <em>puppet agent</em> как демон.</p>
+
+<p>P.S.:<br />
+Предположим вам надо протестировать какую-то фичу и вы не хотите сразу пушить в мастер.
+* Создаете ветку в вашем репозитории;
+* Коммитите, пушите;
+* На сервере, вызываете puppet agent с указанием нужного окружения:<br />
+<code>puppet agent -tv --environment test_env</code>.</p>
+
+]]></content>
+  </entry>
+  
+</feed>

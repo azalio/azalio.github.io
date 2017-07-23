@@ -1,0 +1,296 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Puppet-server-install - azalio blog</title>
+  <meta name="author" content="Mikhail Petrov">
+
+  
+  <meta name="description" content="Установка puppet server 5.x. Все действия я буду производить на CentOs 7.x Очень важно, чтобы время на серверах совпадало, поэтому установим ntp: &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://azalio.github.io/blog/2017/07/24/puppet-server-install/">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="azalio blog" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="/javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-287998-5']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">azalio blog</a></h1>
+  
+    <h2>Рабочие заметки SE</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="sitesearch" value="azalio.github.io">
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Puppet-server-install</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2017-07-24T01:15:00+03:00'><span class='date'><span class='date-month'>Jul</span> <span class='date-day'>24</span><span class='date-suffix'>th</span>, <span class='date-year'>2017</span></span> <span class='time'>1:15 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>Установка puppet server 5.x.</p>
+
+<p>Все действия я буду производить на CentOs 7.x</p>
+
+<p>Очень важно, чтобы время на серверах совпадало, поэтому установим <strong>ntp</strong>:<br />
+<code>sudo yum -y install ntp</code><br />
+<code>sudo systemctl start ntpd</code><br />
+<code>sudo systemctl enable ntpd</code><br />
+(хотя позже я просто взвел его через puppet).</p>
+
+<p>Для начала надо добавить puppet репозиторий (нужный вам вы можете найти <a href="https://docs.puppet.com/puppet/5.0/puppet_platform.html" target="_blank">тут</a>):<br />
+<code>sudo rpm -Uvh https://yum.puppetlabs.com/puppet5/puppet5-release-el-7.noarch.rpm</code></p>
+
+<p>И установить puppet server:<br />
+<code>yum install puppetserver</code>
+<!--more-->
+Для возможности ревью изменений, я настрою работу <em>environments</em> через git.<br />
+Вы можете поднять свой сервер, я же воспользуюсь сервером gitlab.com, так как у них можно бесплатно завести приватный репозиторий.</p>
+
+<p>Заходим на <a href="https://gitlab.com/" target="_blank">gitlab</a>, заводим приватный репозиторий, делаем основную ветку <strong>production</strong>.</p>
+
+<p>Так как у меня r10k (инструмент, который позволяет работать с динамическими окружениями) запускается из-под рута, то я добавил публичный ключ рута в gitlab.</p>
+
+<p>Паппетлабовцы создали репозиторий, который можно склонировать, для работы с динамическим окружением и написали <a href="https://github.com/puppetlabs/control-repo" target="_blank">инструкцию</a>. Выполните шаги, которые там указаны и возвращайтесь сюда.</p>
+
+<p>Устанавливаем <a href="https://github.com/adrienthebo/r10k" target="_blank">r10k</a> через puppet на мастер сервере:<br />
+<code>/opt/puppetlabs/puppet/bin/gem install r10k</code></p>
+
+<p>Создаем для него конфиг:</p>
+<figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+</pre></td><td class="code"><pre><code class=""><span class="line">cat /etc/puppetlabs/r10k/r10k.yaml
+</span><span class="line"># The location to use for storing cached Git repos
+</span><span class="line">:cachedir: '/var/cache/r10k'
+</span><span class="line">
+</span><span class="line"># A list of git repositories to create
+</span><span class="line">:sources:
+</span><span class="line">  # This will clone the git repository and instantiate an environment per
+</span><span class="line">  # branch in /etc/puppetlabs/code/environments
+</span><span class="line">  :my-org:
+</span><span class="line">    remote: 'git@gitlab.com:azalio-puppet/control-repo.git'
+</span><span class="line">    basedir: '/etc/puppetlabs/code/environments'</span></code></pre></td></tr></table></div></figure>
+<p>Как вы видете в <strong>remote</strong> надо указать свой репозиторий.</p>
+
+<p>Все готово для запуска puppet и r10k.<br />
+<code>systemctl start puppetserver</code><br />
+<code>systemctl enable puppetserver</code><br />
+(если у вас ругнулось на память, то можете уменьшить настройки в файле <code>/etc/sysconfig/puppetserver</code> <em>JAVA_ARGS</em>)</p>
+
+<p>Запускаем r10k:<br />
+<code>/opt/puppetlabs/puppet/bin/r10k deploy environment -pv</code></p>
+
+<p>Он подтянет все бранчи из вашего git репозитория.</p>
+
+<p>Вот в принципе и все.<br />
+Далее я сделал запуск r10k из крона, автоматическое подписывание сертификатов на основе доменного имени и запустил <em>puppet agent</em> как демон.</p>
+
+<p>P.S.:<br />
+Предположим вам надо протестировать какую-то фичу и вы не хотите сразу пушить в мастер.
+* Создаете ветку в вашем репозитории;
+* Коммитите, пушите;
+* На сервере, вызываете puppet agent с указанием нужного окружения:<br />
+<code>puppet agent -tv --environment test_env</code>.</p>
+
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Mikhail Petrov</span></span>
+
+      
+
+
+
+
+<time class='entry-date' datetime='2017-07-24T01:15:00+03:00'><span class='date'><span class='date-month'>Jul</span> <span class='date-day'>24</span><span class='date-suffix'>th</span>, <span class='date-year'>2017</span></span> <span class='time'>1:15 am</span></time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/git/'>git</a>, <a class='category' href='/blog/categories/puppet/'>puppet</a>, <a class='category' href='/blog/categories/r10k/'>r10k</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  
+  
+    <div class="fb-like" data-send="true" data-width="450" data-show-faces="false"></div>
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2017/07/24/git-rebase-squash/" title="Previous Post: git-rebase-squash">&laquo; git-rebase-squash</a>
+      
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2017/07/24/puppet-server-install/">Puppet-server-install</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2017/07/24/git-rebase-squash/">Git-rebase-squash</a>
+      </li>
+    
+  </ul>
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2017 - Mikhail Petrov -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'azalio-github-io';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://azalio.github.io/blog/2017/07/24/puppet-server-install/';
+        var disqus_url = 'http://azalio.github.io/blog/2017/07/24/puppet-server-install/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id; js.async = true;
+  js.src = "//connect.facebook.net/en_US/all.js#appId=212934732101925&xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+
+
+
+
+
+
+
+
+</body>
+</html>
